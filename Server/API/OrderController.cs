@@ -5,7 +5,6 @@ using Offsys.Server.Services;
 
 namespace Offsys.Server.API
 {
-    [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
@@ -19,39 +18,24 @@ namespace Offsys.Server.API
         }
 
         [HttpGet]
-        [Route("api/cities")]
-        public async Task<IActionResult> GetCities()
+        [Route("cities")]
+        public async Task<string> GetCities()
         {
-            var cities = await _orderService.getCities();
-            if (cities == null)
-            {
-                return NotFound("GetCities failure");
-            }
-            return Ok(cities);
+            return await Task.FromResult(_orderService.getCities());
         }
 
         [HttpGet]
-        [Route("api/cities/{id}")]
-        public async Task<IActionResult> GetCityDetails([FromRoute] string id)
+        [Route("cities/{id}")]
+        public async Task<string> GetCityDetails([FromRoute] string id)
         {
-            var details = await _orderService.GetCityDetails(id);
-            if (details == null)
-            {
-                return NotFound("GetCityDetails failure");
-            }
-            return Ok(details);
+            return await _orderService.GetCityDetails(id);
         }
 
         [HttpGet]
-        [Route("api/process/{order}")]
-        public async Task<IActionResult> ProcessOrder([FromRoute] string order)
+        [Route("process/{order}")]
+        public async Task<string> ProcessOrder([FromRoute] string order)
         {
-            var status = await _orderService.ProcessOrder(order);
-            if (status == null)
-            {
-                return NotFound("ProcessOrder failure");
-            }
-            return Ok(status);
+            return await _orderService.ProcessOrder(order);
         }
     }
 }
