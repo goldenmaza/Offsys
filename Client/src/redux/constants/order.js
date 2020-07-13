@@ -1,6 +1,7 @@
 ﻿export const orderState = {
     level: process.env.REACT_APP_DOC_ORDER_LEVEL,
-    label: process.env.REACT_APP_DOC_ORDER_LABEL
+    label: process.env.REACT_APP_DOC_ORDER_LABEL,
+    cities: null
 };
 
 export const REQ_ORDER_CITIES = 'REQ_ORDER_CITIES';

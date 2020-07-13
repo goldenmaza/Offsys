@@ -7,8 +7,13 @@
 export const getCities = () => (dispatch) => {
     dispatch({ type: REQ_ORDER_CITIES });
 
-    fetch(process.env.REACT_APP_SERVER_API_ORDER_CONTROLLER)
+    const options = {
+        method: 'GET'
+    };
+
+    fetch(process.env.REACT_APP_SERVER_API_ORDER_CONTROLLER + "/cities", options)
         .then(promise => {
+            console.log(promise.json());
             return promise.json();
         })
         .then(result => dispatch({

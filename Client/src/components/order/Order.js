@@ -12,10 +12,15 @@ import {
 class Order extends Component {
     constructor(props) {
         super(props);
+        this.props.actions.getCities();
+    }
+
+    componentWillMount() {
     }
 
     render() {
-        const { level, label } = this.props;
+        const { level, label, cities } = this.props;
+        console.log(cities);
         return (
             <>
                 <Heading hidden={false} level={level} label={label} />
@@ -26,7 +31,8 @@ class Order extends Component {
 
 const mapStateToProps = state => ({
     level: state.orderComponent.level,
-    label: state.orderComponent.label
+    label: state.orderComponent.label,
+    cities: state.orderComponent.cities
 });
 
 const mapDispatchToProps = dispatch => ({
