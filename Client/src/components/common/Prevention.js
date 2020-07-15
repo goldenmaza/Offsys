@@ -13,9 +13,9 @@ class Prevention extends Component {
     render() {
         const { level, label } = this.props;
         return (
-            <section>
+            <>
                 <Heading hidden={false} level={level} label={label} />
-            </section>
+            </>
         );
     }
 }

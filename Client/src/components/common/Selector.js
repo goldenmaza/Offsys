@@ -17,7 +17,7 @@ class Selector extends Component {
         return (
             <>
                 <main className={select}>
-                    <Heading hidden={false} level={level} label={label} />
+                    <Heading hidden={true} level={level} label={label} />
                     {select === 'order' &&
                         <Order />
                     }

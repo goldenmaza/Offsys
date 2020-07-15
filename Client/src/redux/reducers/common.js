@@ -16,3 +16,5 @@ export const preventionComponent = (state = preventionState, action) => {
             return state;
     }
 };
+
+//No state for the Heading & Select component as it get it's 'state' from the Component that created it...
