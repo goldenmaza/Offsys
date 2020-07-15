@@ -5,6 +5,7 @@ using Offsys.Server.Services;
 
 namespace Offsys.Server.API
 {
+    [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
@@ -25,17 +26,17 @@ namespace Offsys.Server.API
         }
 
         [HttpGet]
-        [Route("cities/{id}")]
-        public async Task<string> GetCityDetails([FromRoute] string id)
+        [Route("city/{id}")]
+        public async Task<string> GetCityDetails([FromRoute] int id)
         {
-            return await _orderService.GetCityDetails(id);
+            return await Task.FromResult(_orderService.GetCityDetails(id));
         }
 
         [HttpGet]
         [Route("process/{order}")]
         public async Task<string> ProcessOrder([FromRoute] string order)
         {
-            return await _orderService.ProcessOrder(order);
+            return await Task.FromResult(_orderService.ProcessOrder(order));
         }
     }
 }

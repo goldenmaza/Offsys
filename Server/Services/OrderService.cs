@@ -1,19 +1,17 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Offsys.Server.Models;
 using Offsys.Server.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Offsys.Server.Services
 {
     public class OrderService : IOrderService
     {
         private readonly IWebHostEnvironment _webHostingEnvironment;
-        private List<City> availableCombinations = null;
+        private List<City> availableCombinations = CityUtil.GetExampleData();
 
         public OrderService(IWebHostEnvironment webHostingEnvironment)
         {
@@ -30,22 +28,22 @@ namespace Offsys.Server.Services
 
         public string getCities()
         {
-            List<string> cities = new List<string>();
+            Dictionary<int, string> cities = new Dictionary<int, string>();
 
             foreach (City city in availableCombinations)
             {
-                cities.Add(city.name);
+                cities.Add(city.id, city.name);
             }
 
             return JsonConvert.SerializeObject(cities);
         }
 
-        public Task<string> GetCityDetails(string id)
+        public string GetCityDetails(int id)
         {
-            throw new NotImplementedException();
+            return JsonConvert.SerializeObject(availableCombinations[id]);
         }
 
-        public Task<string> ProcessOrder(string order)
+        public string ProcessOrder(string order)
         {
             throw new NotImplementedException();
         }
