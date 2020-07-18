@@ -3,8 +3,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Offsys.Server.Models;
 using Offsys.Server.Utilities;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Offsys.Server.Services
 {
@@ -12,6 +12,7 @@ namespace Offsys.Server.Services
     {
         private readonly IWebHostEnvironment _webHostingEnvironment;
         private List<City> availableCombinations = CityUtil.GetExampleData();
+        private List<Order> storedOrders = new List<Order>();
 
         public OrderService(IWebHostEnvironment webHostingEnvironment)
         {
@@ -45,7 +46,29 @@ namespace Offsys.Server.Services
 
         public string ProcessOrder(string order)
         {
-            throw new NotImplementedException();
+            if (_webHostingEnvironment.IsDevelopment())
+            {
+                Order o = new Order();
+                City c = (City)JsonConvert.DeserializeObject(order);
+
+                o.city = c.id;
+                o.total = c.squares * c.price;
+                o.square = c.squares;
+                foreach (Service s in c.services)
+                {
+                    if (s.selected)
+                    {
+                        o.selected.Append(s.id);
+                    }
+                }
+
+                return o.total > 0 ? JsonConvert.SerializeObject(o) : "ERROR";
+            }
+            else
+            {
+                // database implementation
+                return false ? "TODO" : "ERROR";
+            }
         }
     }
 }
