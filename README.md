@@ -1,4 +1,4 @@
-# Offsys
+# Offsys &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/goldenmaza/offsys/blob/master/LICENSE.md)
 
 Note: This is a work in progress...
 
