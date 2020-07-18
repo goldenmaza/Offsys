@@ -7,6 +7,7 @@ namespace Offsys.Server.Models
         public int id { get; set; }
         public string name { get; set; }
         public float price { get; set; }
+        public int squares { get; set; }
         public List<Service> services { get; set; }
     }
 }

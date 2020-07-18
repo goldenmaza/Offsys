@@ -5,5 +5,6 @@
         public int id { get; set; }
         public string name { get; set; }
         public float price { get; set; }
+        public bool selected { get; set; }
     }
 }
