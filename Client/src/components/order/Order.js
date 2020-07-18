@@ -9,7 +9,8 @@ import Select from '../common/Select';
 import {
     getCities,
     getCityDetails,
-    processOrder
+    processOrder,
+    changeCityDetails
 } from '../../redux/actions/order';
 
 class Order extends Component {
@@ -17,7 +18,6 @@ class Order extends Component {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
-        this.processOrder = this.processOrder.bind(this);
         this.submitButton = this.submitButton.bind(this);
     }
 
@@ -26,34 +26,42 @@ class Order extends Component {
     }
 
     handleChange(event) {
-        event.preventDefault();
+        let { details } = this.props;
 
-        if (event.target.id === 'sel') {
-            this.props.actions.getCityDetails(event.target.value);
+        if (details !== null) {
+            if (event.target.id === 'squareFeet') {
+                details.squares = parseInt(event.target.value);
+                this.props.actions.changeCityDetails(details);
+            } else if (event.target.name === 'service') {
+                let service = details.services[event.target.id];
+                service.selected = !service.selected;
+                details.services[event.target.id] = service;
+                this.props.actions.changeCityDetails(details);
+            }
         } else {
-            //TODO: handle checkbox activities...
+            if (event.target.id === 'sel') {
+                this.props.actions.getCityDetails(event.target.value);
+            }
         }
     }
 
     submitButton() {
-        //TODO: handle submit button...
-    }
+        const { details } = this.props;
 
-    processOrder(event) {
-        event.preventDefault();
-
-        this.props.actions.processOrder();
+        if (details !== null) {
+            this.props.actions.processOrder(details);
+        }
     }
 
     render() {
-        const { level, label, cities, details } = this.props;
+        const { level, label, cities, details, status } = this.props;
         let services = [];
 
         if (details !== null) {
             details.services.map(s => {
                 services.push(
                     <div key={s.id}>
-                        <input id={s.id} type='checkbox' onChange={this.handleChange} />
+                        <input id={s.id} type='checkbox' onChange={this.handleChange} name='service' value={s.name} />
                         <label htmlFor={s.id}>{s.name}</label>
                     </div>
                 );
@@ -61,7 +69,6 @@ class Order extends Component {
         }
 
         if (cities != null) {
-            console.log(this.props.cities);
             return (
                 <section>
                     <Heading hidden={true} level={level} label={label} />
@@ -73,7 +80,7 @@ class Order extends Component {
                             </div>
                             <div>
                                 <strong>{process.env.REACT_APP_DOC_SQUAREFEET_LABEL}</strong>
-                                <input id='squareFeet' type='text' />
+                                <input id='squareFeet' type='text' onChange={this.handleChange} />
                             </div>
                             <div>
                                 <strong>{process.env.REACT_APP_DOC_AVAILABLE_LABEL}</strong>
@@ -99,14 +106,16 @@ const mapStateToProps = state => ({
     level: state.orderComponent.level,
     label: state.orderComponent.label,
     cities: state.orderComponent.cities,
-    details: state.orderComponent.details
+    details: state.orderComponent.details,
+    status: state.orderComponent.status
 });
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators({
         getCities,
         getCityDetails,
-        processOrder
+        processOrder,
+        changeCityDetails
     }, dispatch)
 });
 
