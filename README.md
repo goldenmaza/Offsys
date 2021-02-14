@@ -1,5 +1,9 @@
 # Offsys &middot; [![GitHub license](https://img.shields.io/badge/license-ISC-blue.svg)](https://github.com/goldenmaza/offsys/blob/master/LICENSE.md)
 
+* [Client](#client)
+* [Server](#server)
+  + [Possible API endpoints](#possible-api-endpoints)
+
 **Note:** This is a work in progress...
 
 This is a .Net Core application, which is my first attempt at making a front-end (React) and
